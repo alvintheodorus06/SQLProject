@@ -1,0 +1,32 @@
+--Exploratory analysis, data count
+SELECT 
+  inter_dom AS count_inter_dom,
+  COUNT(*) AS total_records,
+	SUM(total_records) OVER (ORDER BY inter_dom) AS mtotal_records
+FROM students
+GROUP BY inter_dom;
+
+--Exploratory, test scores between group
+SELECT 
+	MIN(todep) AS min_phq,
+	MAX(todep) AS max_phq,
+	ROUND(AVG(todep),2) AS avg_phq,
+	MIN(tosc) AS min_scs,
+	MAX(tosc) AS max_scs,
+	ROUND(AVG(tosc),2) AS avg_scs,
+	MIN(toas) AS min_as,
+	MAX(toas) AS max_as,
+	ROUND(AVG(toas),2) AS avg_as
+FROM students
+GROUP BY inter_dom;
+
+--Exploratory, impact of stay length to test scores
+SELECT
+	stay,
+	ROUND(AVG(todep),2) AS average_phq,
+	ROUND(AVG(tosc),2) AS average_scs,
+	ROUND(AVG(toas),2) AS average_as
+FROM students
+WHERE inter_dom='Inter'
+GROUP BY stay
+ORDER BY stay DESC;
